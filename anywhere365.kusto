@@ -1,10 +1,10 @@
 Perf
-| where Computer has "Uccprdap"
+| where Computer has "xxxxxxx"
 | where ObjectName has "Anywhere365"
 | distinct CounterName
 
 Perf
-| where Computer has "Uccprdap"
+| where Computer has "xxxxxxxxx"
 | where InstanceName contains "cc_enrollment" 
 | where CounterName == "Active Away Agents" 
 | join  kind = inner
