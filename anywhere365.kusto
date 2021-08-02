@@ -1,10 +1,10 @@
 Perf
-| where Computer has "xxxxxxx"
 | where ObjectName has "Anywhere365"
 | distinct CounterName
 
 Perf
-| where Computer has "xxxxxxxxx"
+// trying to get join to work...
+
 | where InstanceName contains "cc_enrollment" 
 | where CounterName == "Active Away Agents" 
 | join  kind = inner
@@ -14,10 +14,7 @@ Perf     //or CounterName == "Active Away Agents"
 | summarize max(CounterValue) by bin(TimeGenerated, 1m), InstanceName
 | render areachart with (legend = hidden, title = "cats")
 
-
-
-
-
+// Available counters
 
 Anywhere365 UCC(*)\Concurrent AudioCalls
 Anywhere365 UCC(*)\IVR AudioCalls
