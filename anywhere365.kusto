@@ -1,0 +1,52 @@
+Perf
+| where Computer has "Uccprdap"
+| where ObjectName has "Anywhere365"
+| distinct CounterName
+
+Perf
+| where Computer has "Uccprdap"
+| where InstanceName contains "cc_enrollment" 
+| where CounterName == "Active Away Agents" 
+| join  kind = inner
+Perf     //or CounterName == "Active Away Agents"
+//| where CounterName has "Queue AudioCalls"
+| where CounterValue > 1
+| summarize max(CounterValue) by bin(TimeGenerated, 1m), InstanceName
+| render areachart with (legend = hidden, title = "cats")
+
+
+
+
+
+
+Anywhere365 UCC(*)\Concurrent AudioCalls
+Anywhere365 UCC(*)\IVR AudioCalls
+Anywhere365 UCC(*)\Queue AudioCalls
+Anywhere365 UCC(*)\Accepted AudioCalls
+Anywhere365 UCC(*)\Concurrent IMCalls
+Anywhere365 UCC(*)\Active Agents
+Anywhere365 UCC(*)\Active Away Agents
+Anywhere365 UCC(*)\Away Agents
+Anywhere365 UCC(*)\Active Busy Agents
+Anywhere365 UCC(*)\Busy Agents
+Anywhere365 UCC(*)\Not Active Agents
+Anywhere365 UCC(*)\Not Offline Active Agents
+Anywhere365 UCC(*)\Not Offline Agents
+Anywhere365 UCC(*)\Active Offline Agents
+Anywhere365 UCC(*)\Offline Agents
+Anywhere365 UCC(*)\Active Online Agents
+Anywhere365 UCC(*)\Online Agents
+Anywhere365 UCC(*)\Heartbeat
+Anywhere365 UCC(*)\Active Presence Subscriptions
+Anywhere365 UCC(*)\Not Active Presence Subscriptions
+Anywhere365 UCC(*)\Established Endpoints
+Anywhere365 UCC(*)\Not Established Endpoints
+Anywhere365 UCC(*)\Sharepoint Connected
+Anywhere365 UCC(*)\Last Conference Creation Time
+Anywhere365 UCC(*)\Last App Join Time
+Anywhere365 UCC(*)\Last Customer Join Time
+Anywhere365 UCC(*)\New Calls per minute
+Anywhere365 UCC(*)\Max Conference Creation Time
+Anywhere365 UCC(*)\Max App Join Time
+Anywhere365 UCC(*)\Max Customer Join Time
+Anywhere365 UCC(*)\Conferences In Use
