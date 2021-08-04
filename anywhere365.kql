@@ -1,18 +1,23 @@
+//Show available counters
+
 Perf
 | where ObjectName has "Anywhere365"
 | distinct CounterName
 
-Perf
-// trying to get join to work...
+//Graph two objects together
 
-| where InstanceName contains "cc_enrollment" 
-| where CounterName == "Active Away Agents" 
-| join  kind = inner
-Perf     //or CounterName == "Active Away Agents"
-//| where CounterName has "Queue AudioCalls"
-| where CounterValue > 1
-| summarize max(CounterValue) by bin(TimeGenerated, 1m), InstanceName
-| render areachart with (legend = hidden, title = "cats")
+Perf
+| where InstanceName has "cc_it_csc" 
+| where CounterName == "Away Agents" or CounterName == "Active Away Agents"
+| project InstanceName, CounterName, CounterValue, TimeGenerated
+| join  kind = inner (
+    Perf
+    | where InstanceName has "cc_it_csc" 
+    | where CounterName == "Queue AudioCalls" 
+    | project InstanceName, CounterName, CounterValue, TimeGenerated
+) on TimeGenerated
+| summarize AwayAgents = avg(CounterValue), QueuedCalls = avg(CounterValue1) by bin(TimeGenerated, 1m)
+| render areachart with (legend = visible, title = "UCC Stats")
 
 // Available counters
 
